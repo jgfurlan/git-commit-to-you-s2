@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Pinyon+Script&display=swap');
+@import "tailwindcss";
+
+:root {
+  --background: #08070A;
+  --foreground: #FAF6EE;
+  
+  --obsidian: #08070A;
+  --crypt: #120F17;
+  --crypt-card: #181420;
+  --crimson: #7A0C1E;
+  --blood: #9E1129;
+  --gold: #C9A86A;
+  --gold-light: #E5C384;
+  --parchment: #FAF6EE;
+  --parchment-aged: #E9E1D2;
+  --moonstone: #2B3B4E;
+}
+
+@theme {
+  --color-obsidian: var(--obsidian);
+  --color-crypt: var(--crypt);
+  --color-crypt-card: var(--crypt-card);
+  --color-crimson: var(--crimson);
+  --color-blood: var(--blood);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-parchment: var(--parchment);
+  --color-parchment-aged: var(--parchment-aged);
+  --color-moonstone: var(--moonstone);
+
+  --font-cinzel: 'Cinzel', serif;
+  --font-cinzel-dec: 'Cinzel Decorative', serif;
+  --font-garamond: 'EB Garamond', serif;
+  --font-pinyon: 'Pinyon Script', cursive;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-garamond), serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar gótica */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #08070A;
+}
+::-webkit-scrollbar-thumb {
+  background: #2B3B4E;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C9A86A;
+}
+
+/* Efeito de queima / brilho de cera e vela */
+@keyframes flicker {
+  0%, 100% { opacity: 0.95; transform: scale(1); filter: blur(0px); }
+  50% { opacity: 0.85; transform: scale(0.98); filter: blur(0.5px); }
+  75% { opacity: 1; transform: scale(1.02); filter: blur(0px); }
+}
+
+.candle-flicker {
+  animation: flicker 3s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(201, 168, 106, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(201, 168, 106, 0.5); }
+}
+
+.glow-gold {
+  animation: pulseGlow 4s infinite ease-in-out;
+}
