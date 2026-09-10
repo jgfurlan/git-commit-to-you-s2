@@ -1,29 +1,29 @@
 # Progress Tracker: Dynamic State Anchor
 
 ## Fase Atual do Projeto
-**Fase 1: Fundação, Design System & Ritual do Pedido de Namoro**
+**Fase 1: Fundação, Design System & Ritual do Pedido de Namoro** (Concluída e Sincronizada)
 
 ## Status Ativo
-- **Tarefa Atual:** Scaffolding concluído e componentes essenciais do Ritual de Pedido de Namoro implementados.
-- **Status:** Build 100% verde no Next.js 15, suíte de testes Vitest passando (5/5), tokens de Dark Romanticism e componentes interativos criados.
+- **Tarefa Atual:** Marco 1 entregue e sincronizado em `origin/main`. Preparação para o Marco 2 (Motor de Memórias do Grimório & Ingestão).
+- **Status:** Scaffolding Next.js 15, Design System Vampire Diaries × Edgar Allan Poe, Ritual do Pedido de Namoro (5 Atos) e Santuário Principal integrados e testados.
 
 ## Marcos Concluídos
 - ✅ Scaffolding completo do projeto Next.js 15 + React 19 + TypeScript + Tailwind CSS v4.
-- ✅ Configuração do Vitest e suíte inicial de testes invariantes (TDD).
-- ✅ Design System Gótico configurado no `globals.css` com fontes Google Fonts (`Cinzel`, `EB Garamond`, `Pinyon Script`) e tokens de cores (*Abyssal Obsidian*, *Crypt Velvet*, *Vampiric Crimson*, *Antique Gold*).
-- ✅ Hook tátil `useHoldToSeal` com cálculo normalizado de tempo e disparo háptico `navigator.vibrate`.
-- ✅ Criação dos componentes interativos de TVD:
-  - `CandleFlame.tsx`: Chama bruxuleante com halo âmbar.
-  - `VervainLocket.tsx`: Medalhão de verbena com dobradiça 3D e voto secreto.
-  - `GeminiAscendant.tsx`: Anéis astrológicos concêntricos de alinhamento de datas.
-  - `SalvatoreParchment.tsx`: Carta do namorado com pergaminho antigo e caligrafia.
-  - `DaylightWaxSeal.tsx`: Selo de cera carmesim 3D com Lápis-Lazúli e preenchimento radial.
-  - `RitualOrchestrator.tsx`: Orquestração dos 5 atos cinematográficos do pedido.
-  - `SanctuaryHome.tsx`: Santuário Principal do Grimório em PT-BR pós-selamento.
-- ✅ Rota principal (`src/app/page.tsx`) com persistência de estado do pacto no `localStorage`.
+- ✅ Testes TDD com Vitest passando silenciosamente (5/5 verdes).
+- ✅ Tokens góticos no `globals.css` com tipografia nobre do Google Fonts (`Cinzel`, `EB Garamond`, `Pinyon Script`).
+- ✅ Componentes interativos de TVD:
+  - `CandleFlame.tsx` (Chama bruxuleante com halo âmbar).
+  - `VervainLocket.tsx` (Medalhão de Elena com abertura 3D e voto secreto).
+  - `GeminiAscendant.tsx` (Engrenagens astrológicas de alinhamento temporal).
+  - `SalvatoreParchment.tsx` (Carta com textura de pergaminho antigo).
+  - `DaylightWaxSeal.tsx` (Selo carmesim 3D com Lápis-Lazúli e haptics de 3s).
+  - `RitualOrchestrator.tsx` (Narrativa em 5 atos e celebração com confetes).
+  - `SanctuaryHome.tsx` (Santuário pós-pacto 100% em PT-BR).
+- ✅ Rota principal (`src/app/page.tsx`) com persistência no `localStorage`.
+- ✅ Commit e push para `origin/main` (`feat: [init] scaffold Next.js 15 app with TVD proposal ritual & gothic design system`).
 
-## Fila de Implementação Imediata (Próximos Passos)
-1. Iniciar servidor de desenvolvimento local (`npm run dev`) para validação no navegador/mobile.
-2. Ingestão e Parser de WhatsApp (`.txt` com agrupamento em sessões conversacionais).
-3. Ingestão de Dias de Qualidade em Markdown (`.md` com frontmatter estruturado).
-4. Configuração do Vector Store RAG (Supabase / pgvector / SQLite-vec) e System Prompt da Guardiã.
+## Fila de Implementação Imediata (Próximo Marco: O Motor do Grimório)
+1. **Parser de WhatsApp:** Utilitário para parsear exportações de chat do WhatsApp (`.txt`), agrupando mensagens em sessões conversacionais (>30min inatividade) e filtrando mídias/mensagens do sistema.
+2. **Parser de Diários (.md):** Leitor de arquivos Markdown estruturados com frontmatter para os dias de qualidade do casal.
+3. **Aba "Grimório":** Linha do tempo visual de memórias com filtro por datas e sentimentos.
+4. **Aba "A Guardiã":** Interface de chat oracular com streaming de respostas poéticas em pergaminho.
