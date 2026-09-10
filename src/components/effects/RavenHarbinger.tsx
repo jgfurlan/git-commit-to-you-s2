@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface RavenHarbingerProps {
@@ -9,11 +9,55 @@ interface RavenHarbingerProps {
 
 export function RavenHarbinger({ onFeatherLanded }: RavenHarbingerProps) {
   const [hasLanded, setHasLanded] = useState(false);
+  const [flightKey, setFlightKey] = useState(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const playScreech = useCallback(() => {
+    try {
+      if (!audioRef.current) {
+        audioRef.current = new Audio('/audio/raven-screech.mp3');
+      }
+      audioRef.current.volume = 0.45;
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {
+        // Ignora silenciosamente restrições de autoplay antes de interação do usuário
+      });
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  // 1. Toca o grasnado/screech dramático logo após o corvo surgir no horizonte
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      playScreech();
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, [flightKey, playScreech]);
+
+  // 2. Dispara screeches e vôos periódicos aleatórios (a cada 25s a 50s)
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
+    const scheduleNextFlight = () => {
+      const randomInterval = 25000 + Math.random() * 25000; // Entre 25s e 50s
+      timeoutId = setTimeout(() => {
+        setFlightKey((prev) => prev + 1);
+        scheduleNextFlight();
+      }, randomInterval);
+    };
+
+    scheduleNextFlight();
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-[25]">
       {/* 1. Silhueta Majestosa do Corvo Cruzando o Céu de Mystic Falls */}
       <motion.div
+        key={`raven-flight-${flightKey}`}
         initial={{ x: '-20vw', y: '8vh', scale: 0.85, opacity: 0 }}
         animate={{
           x: ['-10vw', '45vw', '115vw'],
@@ -79,6 +123,7 @@ export function RavenHarbinger({ onFeatherLanded }: RavenHarbingerProps) {
               onFeatherLanded?.();
             }
           }}
+          onClick={playScreech}
           className="absolute top-0 left-0 -translate-x-1/2 cursor-pointer pointer-events-auto group"
         >
           {/* SVG Hiperdetalhado da Pena de Corvo Negra com Brilho Dourado */}

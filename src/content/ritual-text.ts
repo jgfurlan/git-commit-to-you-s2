@@ -1,6 +1,6 @@
 export const RITUAL_TEXT = {
   act1: {
-    title: "Mansão dos Salvatore • 1864",
+    title: "O Ritual da Eternidade",
     subtitle: "A Penumbra de Mystic Falls",
     guardianIntro: "Você acaba de adentrar um relicário forjado por uma devoção que desafia o tempo e a mortalidade...",
     candleHint: "Toque na chama para despertar A Guardiã",

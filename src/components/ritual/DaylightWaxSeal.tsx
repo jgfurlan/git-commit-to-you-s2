@@ -16,8 +16,8 @@ export function DaylightWaxSeal({ onConsagrated }: DaylightWaxSealProps) {
   const triggerConfetti = () => {
     // Efeito de pétalas carmesim e faíscas douradas
     confetti({
-      particleCount: 80,
-      spread: 70,
+      particleCount: 120,
+      spread: 80,
       origin: { y: 0.6 },
       colors: ['#7A0C1E', '#9E1129', '#C9A86A', '#E5C384', '#2B3B4E'],
     });
@@ -27,9 +27,23 @@ export function DaylightWaxSeal({ onConsagrated }: DaylightWaxSealProps) {
     holdDurationMs: 3000,
     onComplete: () => {
       triggerConfetti();
+      if (navigator.vibrate) {
+        navigator.vibrate([40, 100, 40]);
+      }
       onConsagrated();
     },
   });
+
+  // Vibração rítmica tipo batimento cardíaco enquanto ela segura o selo
+  React.useEffect(() => {
+    if (!isHolding || isSealed) return;
+    const interval = setInterval(() => {
+      if (navigator.vibrate) {
+        navigator.vibrate(18);
+      }
+    }, 450);
+    return () => clearInterval(interval);
+  }, [isHolding, isSealed]);
 
   const circumference = 2 * Math.PI * 54; // raio 54
   const strokeDashoffset = circumference - progress * circumference;

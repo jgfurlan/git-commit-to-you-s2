@@ -69,43 +69,44 @@ export function RitualOrchestrator({
       {/* 3. Corvo de Damon & Pena Negra (Reinvocável) */}
       <RavenHarbinger key={ravenTriggerKey} />
 
-      {/* Cabeçalho do Santuário */}
-      <header className="relative z-20 w-full max-w-lg flex items-center justify-between border-b border-[#C9A86A]/20 pb-4 pt-2">
+      {/* Cabeçalho Minimalista e Gótico */}
+      <header className="relative z-20 w-full max-w-lg flex items-center justify-between border-b border-[#C9A86A]/20 pb-3 pt-2">
         <div className="flex items-center gap-2.5">
-          <Moon className="w-5 h-5 text-[#C9A86A] filter drop-shadow-[0_0_8px_#C9A86A]" />
+          <Moon className="w-4 h-4 text-[#C9A86A] filter drop-shadow-[0_0_8px_#C9A86A]" />
           <div>
             <h1 className="font-cinzel text-xs tracking-widest text-[#E5C384] uppercase">
-              {RITUAL_TEXT.act1.title}
+              {currentAct === 'ACT_1_FOG_AND_RAVEN' && 'A Chama & A Névoa'}
+              {currentAct === 'ACT_2_VERVAIN_LOCKET' && 'O Relicário de Verbena'}
+              {currentAct === 'ACT_3_GEMINI_ASCENDANT' && 'O Ascendente dos Gêmeos'}
+              {currentAct === 'ACT_4_SALVATORE_LETTER' && 'O Diário dos Salvatore'}
+              {currentAct === 'ACT_5_DAYLIGHT_SEAL' && 'O Selo da Luz do Dia'}
+              {currentAct === 'RITUAL_CONSECRATED' && 'Pacto Consagrado'}
             </h1>
             <p className="font-garamond text-[11px] text-[#FAF6EE]/50 italic">
-              {RITUAL_TEXT.act1.subtitle}
+              {currentAct === 'ACT_1_FOG_AND_RAVEN' && 'A Penumbra de Mystic Falls'}
+              {currentAct === 'ACT_2_VERVAIN_LOCKET' && 'A Proteção Inquebrável de Elena'}
+              {currentAct === 'ACT_3_GEMINI_ASCENDANT' && 'O Alinhamento das Nossas Eras'}
+              {currentAct === 'ACT_4_SALVATORE_LETTER' && 'Páginas Escritas à Meia-Noite'}
+              {currentAct === 'ACT_5_DAYLIGHT_SEAL' && 'O Voto da Eternidade'}
+              {currentAct === 'RITUAL_CONSECRATED' && 'Para Sempre'}
             </p>
           </div>
         </div>
 
-        {/* Controles: Corvo + Indicador de progresso */}
-        <div className="flex items-center gap-3">
-          <button
-            onClick={retriggerRaven}
-            title="Invocar o Vôo do Corvo & Queda da Pena"
-            className="flex items-center gap-1 px-2.5 py-1 rounded-full border border-[#C9A86A]/40 bg-[#120F17]/90 text-[10px] font-cinzel text-[#E5C384] hover:border-[#E5C384] hover:scale-105 transition-all cursor-pointer shadow-md"
-          >
-            <Feather className="w-3 h-3 text-[#C9A86A]" />
-            <span>Corvo</span>
-          </button>
-
-          <div className="flex items-center gap-1.5">
-            {['ACT_1_FOG_AND_RAVEN', 'ACT_2_VERVAIN_LOCKET', 'ACT_3_GEMINI_ASCENDANT', 'ACT_4_SALVATORE_LETTER', 'ACT_5_DAYLIGHT_SEAL'].map((act) => (
-              <div
-                key={act}
-                className={`w-2 h-2 rounded-full transition-all duration-500 ${
-                  currentAct === act 
-                    ? 'bg-[#E5C384] scale-125 shadow-[0_0_10px_#C9A86A]' 
-                    : 'bg-[#2B3B4E]/50'
-                }`}
-              />
-            ))}
-          </div>
+        {/* Indicador de progresso elegante */}
+        <div className="flex items-center gap-1.5">
+          {['ACT_1_FOG_AND_RAVEN', 'ACT_2_VERVAIN_LOCKET', 'ACT_3_GEMINI_ASCENDANT', 'ACT_4_SALVATORE_LETTER', 'ACT_5_DAYLIGHT_SEAL'].map((act, idx) => (
+            <div
+              key={act}
+              className={`transition-all duration-500 ${
+                currentAct === act 
+                  ? 'w-4 h-1.5 rounded-full bg-[#E5C384] shadow-[0_0_8px_#C9A86A]' 
+                  : idx < ['ACT_1_FOG_AND_RAVEN', 'ACT_2_VERVAIN_LOCKET', 'ACT_3_GEMINI_ASCENDANT', 'ACT_4_SALVATORE_LETTER', 'ACT_5_DAYLIGHT_SEAL'].indexOf(currentAct)
+                  ? 'w-2 h-1.5 rounded-full bg-[#C9A86A]/60'
+                  : 'w-1.5 h-1.5 rounded-full bg-[#2B3B4E]/40'
+              }`}
+            />
+          ))}
         </div>
       </header>
 

@@ -16,67 +16,111 @@ export function CandleFlame({ isLit = true, onIgnite, size = 'md' }: CandleFlame
     lg: 'w-14 h-24',
   }[size];
 
+  const handleIgnite = () => {
+    if (navigator.vibrate) {
+      navigator.vibrate([25, 40]);
+    }
+    onIgnite?.();
+  };
+
   return (
     <div 
-      className="relative flex flex-col items-center justify-center cursor-pointer select-none"
-      onClick={onIgnite}
+      className="relative flex flex-col items-center justify-center cursor-pointer select-none group"
+      onClick={handleIgnite}
     >
-      {/* Halo de luz quente projetado no fundo */}
+      {/* 1. Halo de luz ambiente que pulsa com a chama */}
       {isLit && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.5 }}
           animate={{ 
-            opacity: [0.35, 0.5, 0.4, 0.55, 0.35],
-            scale: [1, 1.05, 0.98, 1.03, 1],
+            opacity: [0.4, 0.65, 0.45, 0.7, 0.4],
+            scale: [1, 1.08, 0.96, 1.05, 1],
           }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute w-48 h-48 rounded-full pointer-events-none"
+          transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute w-64 h-64 rounded-full pointer-events-none"
           style={{
-            background: 'radial-gradient(circle, rgba(229,195,132,0.25) 0%, rgba(122,12,30,0.1) 45%, rgba(8,7,10,0) 70%)',
+            background: 'radial-gradient(circle, rgba(229,195,132,0.3) 0%, rgba(161,18,43,0.12) 40%, rgba(4,3,5,0) 70%)',
           }}
         />
       )}
 
-      {/* Chama viva com animação orgânica */}
+      {/* 2. Micro-faíscas/brasas flutuando da chama */}
+      {isLit && (
+        <div className="absolute -top-12 w-16 h-16 pointer-events-none overflow-hidden">
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ y: 25, x: 0, opacity: 0, scale: 0.5 }}
+              animate={{
+                y: [-5, -45],
+                x: [(i - 2) * 6, (i - 2) * 12 + (Math.random() - 0.5) * 8],
+                opacity: [0, 0.9, 0],
+                scale: [0.5, 1, 0.2],
+              }}
+              transition={{
+                duration: 2.2 + i * 0.4,
+                repeat: Infinity,
+                delay: i * 0.45,
+                ease: 'easeOut',
+              }}
+              className="absolute left-1/2 bottom-0 w-1.5 h-1.5 rounded-full bg-[#E5C384] shadow-[0_0_6px_#C9A86A]"
+            />
+          ))}
+        </div>
+      )}
+
+      {/* 3. Chama viva com física orgânica */}
       <div className={`relative ${sizeClasses} flex items-end justify-center`}>
         {isLit ? (
           <motion.div
             initial={{ scaleY: 0, opacity: 0 }}
             animate={{ scaleY: 1, opacity: 1 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="w-full h-full relative"
           >
-            {/* Núcleo azul/branco da base da chama */}
+            {/* Núcleo azul/branco puro de alta temperatura na base */}
             <div 
-              className="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-3 rounded-full blur-[0.5px]"
-              style={{ background: 'linear-gradient(to top, #6585A8, #FAF6EE)' }}
+              className="absolute bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-4 rounded-full blur-[0.6px] z-10"
+              style={{ background: 'linear-gradient(to top, #7A9BBD, #FFFFFF)' }}
             />
-            {/* Corpo dourado da chama */}
+
+            {/* Corpo dourado da chama com ondulação senoidal */}
             <motion.div
               animate={{
-                scaleY: [1, 1.08, 0.95, 1.04, 1],
-                scaleX: [1, 0.96, 1.03, 0.97, 1],
-                rotate: [-1, 1.5, -0.5, 1, -1],
+                scaleY: [1, 1.12, 0.94, 1.06, 1],
+                scaleX: [1, 0.94, 1.04, 0.96, 1],
+                rotate: [-1.5, 2, -1, 1.5, -1.5],
               }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
               className="w-full h-full origin-bottom"
               style={{
                 borderRadius: '50% 50% 35% 35% / 65% 65% 35% 35%',
-                background: 'linear-gradient(to top, #C9A86A 0%, #E5C384 40%, #FAF6EE 90%)',
-                boxShadow: '0 0 20px #E5C384, 0 0 35px rgba(201, 168, 106, 0.5)',
+                background: 'linear-gradient(to top, #C9A86A 0%, #E5C384 45%, #FAF6EE 90%)',
+                boxShadow: '0 0 25px #E5C384, 0 0 45px rgba(201, 168, 106, 0.6)',
               }}
             />
           </motion.div>
         ) : (
-          /* Pavio apagado com pequena fumaça */
-          <div className="w-1 h-4 bg-stone-700 rounded-t-sm" />
+          /* Pavio apagado com pequena fumaça espectral */
+          <div className="w-1.5 h-5 bg-stone-800 rounded-t-sm relative group-hover:bg-amber-600/80 transition-colors">
+            <motion.div
+              animate={{ opacity: [0.2, 0.6, 0.2], y: [-2, -8] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute -top-3 left-0 w-1 h-3 bg-stone-500/40 rounded-full blur-[1px]"
+            />
+          </div>
         )}
       </div>
 
       {/* Pavio da vela */}
-      <div className="w-1 h-3 bg-stone-800 -mt-1" />
-      {/* Corpo da vela em cera de castiçal */}
-      <div className="w-8 h-12 rounded-t-sm bg-gradient-to-b from-[#E9E1D2] to-[#B0A796] shadow-md border-t border-amber-100/20" />
+      <div className="w-1 h-3 bg-stone-900 -mt-1" />
+
+      {/* Corpo da vela em cera de castiçal com relevo e gotas */}
+      <div className="relative w-9 h-14 rounded-t-sm bg-gradient-to-b from-[#FAF6EE] via-[#E9E1D2] to-[#A89E8C] shadow-lg border-t border-amber-100/30 overflow-hidden">
+        {/* Gotas de cera escorrendo */}
+        <div className="absolute top-1 left-2 w-1.5 h-5 bg-[#FAF6EE] rounded-full opacity-70 shadow-sm" />
+        <div className="absolute top-2 right-2 w-1 h-3.5 bg-[#FAF6EE] rounded-full opacity-60 shadow-sm" />
+      </div>
     </div>
   );
 }

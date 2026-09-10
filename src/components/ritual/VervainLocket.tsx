@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Shield, Heart } from 'lucide-react';
+import { Sparkles, Shield } from 'lucide-react';
 
 interface VervainLocketProps {
   onOpened?: () => void;
@@ -17,8 +17,37 @@ export function VervainLocket({
 }: VervainLocketProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const playLocketSound = () => {
+    try {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      // Som metálico sutil de engrenagem/fecho prateado de joia
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(320, ctx.currentTime + 0.18);
+
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.18);
+    } catch {
+      // ignore
+    }
+  };
+
   const handleToggle = () => {
     if (!isOpen) {
+      if (navigator.vibrate) {
+        navigator.vibrate([20, 60, 20]);
+      }
+      playLocketSound();
       setIsOpen(true);
       onOpened?.();
     }

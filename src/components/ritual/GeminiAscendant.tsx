@@ -17,9 +17,37 @@ export function GeminiAscendant({
 }: GeminiAscendantProps) {
   const [isLocked, setIsLocked] = useState(false);
 
+  const playLockClick = () => {
+    try {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(440, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12);
+
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.12);
+    } catch {
+      // ignore
+    }
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLocked(true);
+      if (navigator.vibrate) {
+        navigator.vibrate([30, 80]);
+      }
+      playLockClick();
       onAligned?.();
     }, 2800);
     return () => clearTimeout(timer);
