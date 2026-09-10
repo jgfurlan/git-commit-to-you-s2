@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { FogCanvas } from '../effects/FogCanvas';
 import { VignetteOverlay } from '../effects/VignetteOverlay';
+import { TVDThemePlayer } from '../effects/TVDThemePlayer';
 
 interface SanctuaryHomeProps {
   partnerName?: string;
@@ -58,13 +59,16 @@ export function SanctuaryHome({
           </div>
         </div>
 
-        <button 
-          onClick={onResetRitual}
-          title="Reviver o Ritual do Pedido"
-          className="w-8 h-8 rounded-full border border-[#C9A86A]/40 bg-[#120F17] flex items-center justify-center text-[#C9A86A] hover:border-[#E5C384] transition-all cursor-pointer shadow-md"
-        >
-          <Heart className="w-4 h-4 fill-current text-[#7A0C1E]" />
-        </button>
+        <div className="flex items-center gap-2">
+          <TVDThemePlayer />
+          <button 
+            onClick={onResetRitual}
+            title="Reviver o Ritual do Pedido"
+            className="w-8 h-8 rounded-full border border-[#C9A86A]/40 bg-[#120F17] flex items-center justify-center text-[#C9A86A] hover:border-[#E5C384] transition-all cursor-pointer shadow-md"
+          >
+            <Heart className="w-4 h-4 fill-current text-[#7A0C1E]" />
+          </button>
+        </div>
       </header>
 
       {/* Conteúdo Principal */}

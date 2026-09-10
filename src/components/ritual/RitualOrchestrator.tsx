@@ -10,6 +10,7 @@ import { DaylightWaxSeal } from './DaylightWaxSeal';
 import { FogCanvas } from '../effects/FogCanvas';
 import { RavenHarbinger } from '../effects/RavenHarbinger';
 import { VignetteOverlay } from '../effects/VignetteOverlay';
+import { TVDThemePlayer } from '../effects/TVDThemePlayer';
 import { RITUAL_TEXT } from '@/content/ritual-text';
 import { RitualAct } from '@/types/ritual';
 import { Moon, Sparkles, BookOpen, Feather } from 'lucide-react';
@@ -64,8 +65,10 @@ export function RitualOrchestrator({
           </div>
         </div>
 
-        {/* Botão de invocar o corvo + Indicador de progresso */}
-        <div className="flex items-center gap-3">
+        {/* Controles: Trilha TVD + Corvo + Progresso */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <TVDThemePlayer />
+
           <button
             onClick={retriggerRaven}
             title="Invocar o Vôo do Corvo & Queda da Pena"
