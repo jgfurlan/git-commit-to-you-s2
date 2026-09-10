@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CandleFlame } from './CandleFlame';
 import { VervainLocket } from './VervainLocket';
@@ -10,7 +10,6 @@ import { DaylightWaxSeal } from './DaylightWaxSeal';
 import { FogCanvas } from '../effects/FogCanvas';
 import { RavenHarbinger } from '../effects/RavenHarbinger';
 import { VignetteOverlay } from '../effects/VignetteOverlay';
-import { TVDThemePlayer } from '../effects/TVDThemePlayer';
 import { RITUAL_TEXT } from '@/content/ritual-text';
 import { RitualAct } from '@/types/ritual';
 import { Moon, Sparkles, BookOpen, Feather } from 'lucide-react';
@@ -35,9 +34,28 @@ export function RitualOrchestrator({
   const [currentAct, setCurrentAct] = useState<RitualAct>('ACT_1_FOG_AND_RAVEN');
   const [isCandleLit, setIsCandleLit] = useState(false);
   const [ravenTriggerKey, setRavenTriggerKey] = useState(1);
+  const tvdAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const retriggerRaven = () => {
     setRavenTriggerKey((prev) => prev + 1);
+  };
+
+  const handlePactConsagrated = () => {
+    try {
+      if (!tvdAudioRef.current) {
+        tvdAudioRef.current = new Audio('/audio/tvd-theme.mp3');
+      }
+      tvdAudioRef.current.currentTime = 0;
+      tvdAudioRef.current.play().catch((err) => {
+        console.warn('Erro ao reproduzir tema TVD:', err);
+      });
+    } catch (e) {
+      console.warn('Audio error:', e);
+    }
+
+    setTimeout(() => {
+      setCurrentAct('RITUAL_CONSECRATED');
+    }, 1200);
   };
 
   return (
@@ -65,10 +83,8 @@ export function RitualOrchestrator({
           </div>
         </div>
 
-        {/* Controles: Trilha TVD + Corvo + Progresso */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <TVDThemePlayer />
-
+        {/* Controles: Corvo + Indicador de progresso */}
+        <div className="flex items-center gap-3">
           <button
             onClick={retriggerRaven}
             title="Invocar o Vôo do Corvo & Queda da Pena"
@@ -246,11 +262,7 @@ export function RitualOrchestrator({
               className="w-full flex flex-col items-center"
             >
               <DaylightWaxSeal
-                onConsagrated={() => {
-                  setTimeout(() => {
-                    setCurrentAct('RITUAL_CONSECRATED');
-                  }, 1200);
-                }}
+                onConsagrated={handlePactConsagrated}
                 partnerName={partnerName}
                 creatorName={creatorName}
               />
