@@ -33,20 +33,22 @@ export function RitualOrchestrator({
 }: RitualOrchestratorProps) {
   const [currentAct, setCurrentAct] = useState<RitualAct>('ACT_1_FOG_AND_RAVEN');
   const [isCandleLit, setIsCandleLit] = useState(false);
-  const [featherLanded, setFeatherLanded] = useState(false);
+  const [ravenTriggerKey, setRavenTriggerKey] = useState(1);
+
+  const retriggerRaven = () => {
+    setRavenTriggerKey((prev) => prev + 1);
+  };
 
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center justify-between p-6 bg-[#040305] text-[#FAF6EE] overflow-hidden select-none">
-      {/* 1. Efeito de Névoa Volumétrica Animada */}
+      {/* 1. Efeito de Névoa Volumétrica Animada (Visível no Desktop e Mobile) */}
       <FogCanvas />
 
       {/* 2. Vinheta Sombria de Cripta */}
       <VignetteOverlay />
 
-      {/* 3. Corvo de Damon & Pena Negra no Ato 1 */}
-      {currentAct === 'ACT_1_FOG_AND_RAVEN' && (
-        <RavenHarbinger onFeatherLanded={() => setFeatherLanded(true)} />
-      )}
+      {/* 3. Corvo de Damon & Pena Negra (Reinvocável) */}
+      <RavenHarbinger key={ravenTriggerKey} />
 
       {/* Cabeçalho do Santuário */}
       <header className="relative z-20 w-full max-w-lg flex items-center justify-between border-b border-[#C9A86A]/20 pb-4 pt-2">
@@ -62,18 +64,29 @@ export function RitualOrchestrator({
           </div>
         </div>
 
-        {/* Indicador de progresso dos 5 atos */}
-        <div className="flex items-center gap-1.5">
-          {['ACT_1_FOG_AND_RAVEN', 'ACT_2_VERVAIN_LOCKET', 'ACT_3_GEMINI_ASCENDANT', 'ACT_4_SALVATORE_LETTER', 'ACT_5_DAYLIGHT_SEAL'].map((act) => (
-            <div
-              key={act}
-              className={`w-2 h-2 rounded-full transition-all duration-500 ${
-                currentAct === act 
-                  ? 'bg-[#E5C384] scale-125 shadow-[0_0_10px_#C9A86A]' 
-                  : 'bg-[#2B3B4E]/50'
-              }`}
-            />
-          ))}
+        {/* Botão de invocar o corvo + Indicador de progresso */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={retriggerRaven}
+            title="Invocar o Vôo do Corvo & Queda da Pena"
+            className="flex items-center gap-1 px-2.5 py-1 rounded-full border border-[#C9A86A]/40 bg-[#120F17]/90 text-[10px] font-cinzel text-[#E5C384] hover:border-[#E5C384] hover:scale-105 transition-all cursor-pointer shadow-md"
+          >
+            <Feather className="w-3 h-3 text-[#C9A86A]" />
+            <span>Corvo</span>
+          </button>
+
+          <div className="flex items-center gap-1.5">
+            {['ACT_1_FOG_AND_RAVEN', 'ACT_2_VERVAIN_LOCKET', 'ACT_3_GEMINI_ASCENDANT', 'ACT_4_SALVATORE_LETTER', 'ACT_5_DAYLIGHT_SEAL'].map((act) => (
+              <div
+                key={act}
+                className={`w-2 h-2 rounded-full transition-all duration-500 ${
+                  currentAct === act 
+                    ? 'bg-[#E5C384] scale-125 shadow-[0_0_10px_#C9A86A]' 
+                    : 'bg-[#2B3B4E]/50'
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </header>
 
@@ -90,10 +103,10 @@ export function RitualOrchestrator({
               transition={{ duration: 0.8 }}
               className="flex flex-col items-center text-center px-4"
             >
-              {/* Pena de corvo mística repousando acima da vela */}
-              <div className="mb-3 flex items-center gap-2 px-3 py-1 rounded-full bg-[#120F17]/80 border border-[#C9A86A]/30 text-[10px] font-cinzel text-[#C9A86A]">
-                <Feather className="w-3.5 h-3.5 text-[#E5C384] animate-pulse" />
-                <span>Pena do Corvo em Vigília</span>
+              {/* Pena de corvo repousando acima da vela */}
+              <div className="mb-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#120F17]/90 border border-[#C9A86A]/40 text-xs font-cinzel text-[#C9A86A] shadow-md">
+                <Feather className="w-4 h-4 text-[#E5C384] animate-pulse" />
+                <span>A Pena do Corvo em Vigília</span>
               </div>
 
               <CandleFlame 
@@ -118,13 +131,13 @@ export function RitualOrchestrator({
                 ) : (
                   <div 
                     onClick={() => setIsCandleLit(true)}
-                    className="p-3 rounded-lg border border-[#C9A86A]/40 bg-[#120F17]/60 cursor-pointer group hover:border-[#E5C384] transition-all"
+                    className="p-3 rounded-lg border border-[#C9A86A]/40 bg-[#120F17]/75 cursor-pointer group hover:border-[#E5C384] transition-all shadow-lg"
                   >
                     <p className="font-cinzel text-xs text-[#E5C384] group-hover:scale-105 transition-all tracking-wider">
                       {RITUAL_TEXT.act1.candleHint}
                     </p>
-                    <p className="font-garamond italic text-[11px] text-[#FAF6EE]/50 mt-0.5">
-                      A chama despertará a Guardiã através da névoa
+                    <p className="font-garamond italic text-[11px] text-[#FAF6EE]/60 mt-0.5">
+                      A chama acenderá na névoa de Mystic Falls
                     </p>
                   </div>
                 )}

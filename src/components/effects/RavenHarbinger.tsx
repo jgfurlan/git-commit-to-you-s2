@@ -1,103 +1,148 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface RavenHarbingerProps {
   onFeatherLanded?: () => void;
 }
 
 export function RavenHarbinger({ onFeatherLanded }: RavenHarbingerProps) {
+  const [hasLanded, setHasLanded] = useState(false);
+
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
-      {/* Silhueta do Corvo Voando no Topo */}
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-[25]">
+      {/* 1. Silhueta Majestosa do Corvo Cruzando o Céu de Mystic Falls */}
       <motion.div
-        initial={{ x: '-20vw', y: '10vh', scale: 0.7, opacity: 0 }}
+        initial={{ x: '-20vw', y: '8vh', scale: 0.85, opacity: 0 }}
         animate={{
-          x: ['0vw', '45vw', '110vw'],
-          y: ['8vh', '14vh', '6vh'],
-          opacity: [0, 0.9, 0],
-          scale: [0.75, 0.95, 0.8],
+          x: ['-10vw', '45vw', '115vw'],
+          y: ['6vh', '15vh', '4vh'],
+          opacity: [0, 1, 0],
+          scale: [0.8, 1.15, 0.85],
         }}
-        transition={{ duration: 4.5, ease: 'easeInOut' }}
-        className="absolute top-0 left-0 text-stone-950"
+        transition={{ duration: 5.5, ease: 'easeInOut' }}
+        className="absolute top-0 left-0"
       >
-        {/* SVG do Corvo de Damon com asas abertas */}
+        {/* SVG detalhado do Corvo com asas abertas e bico afiado */}
         <svg
-          viewBox="0 0 120 70"
-          className="w-24 h-16 fill-[#050406] filter drop-shadow-[0_0_12px_rgba(0,0,0,0.9)]"
+          viewBox="0 0 140 80"
+          className="w-36 h-20 fill-[#040305] filter drop-shadow-[0_0_15px_rgba(201,168,106,0.35)]"
         >
-          {/* Corpo e bico */}
-          <path d="M55,35 Q60,32 70,36 Q80,38 88,34 Q85,39 75,41 Q65,43 55,42 Z" />
           {/* Cabeça e bico afiado */}
-          <path d="M75,37 Q85,32 96,35 Q86,40 76,41 Z" />
-          {/* Asa Esquerda Superior */}
-          <path d="M58,35 Q40,10 15,5 Q28,22 48,34 Z" />
-          <path d="M48,34 Q32,18 10,14 Q22,28 45,36 Z" />
+          <path d="M85,38 Q98,34 110,36 Q98,42 88,43 Z" />
+          {/* Corpo e plumagem */}
+          <path d="M60,35 Q72,32 86,39 Q80,48 65,46 Q50,47 42,42 Z" />
+          {/* Asa Esquerda Superior (Grande envergadura) */}
+          <path d="M62,36 Q45,8 15,2 Q30,22 52,36 Z" />
+          <path d="M52,36 Q35,16 8,12 Q24,28 48,39 Z" />
+          <path d="M48,39 Q32,25 5,22 Q20,35 44,42 Z" />
           {/* Asa Direita Superior */}
-          <path d="M62,35 Q75,12 105,8 Q90,24 68,36 Z" />
-          {/* Cauda em leque */}
-          <path d="M55,42 Q40,55 30,65 Q45,55 58,45 Z" />
+          <path d="M68,36 Q85,10 120,5 Q102,24 76,38 Z" />
+          <path d="M74,38 Q92,18 126,14 Q106,30 80,41 Z" />
+          {/* Cauda em leque de penas */}
+          <path d="M45,43 Q30,60 18,72 Q35,62 50,48 Z" />
+          <path d="M48,44 Q35,65 24,76 Q40,64 52,48 Z" />
         </svg>
       </motion.div>
 
-      {/* A Pena de Corvo Caindo em Balanço Senoidal */}
-      <motion.div
-        initial={{ y: -60, x: '50vw', rotate: -25, opacity: 0 }}
-        animate={{
-          y: ['0vh', '25vh', '50vh', '68vh'],
-          x: ['48vw', '54vw', '46vw', '50vw'],
-          rotate: [-20, 25, -15, 10],
-          opacity: [0, 1, 1, 0.9],
-        }}
-        transition={{
-          duration: 5,
-          ease: 'easeInOut',
-          times: [0, 0.35, 0.7, 1],
-        }}
-        onAnimationComplete={onFeatherLanded}
-        className="absolute top-0 left-0"
-      >
-        {/* SVG Realista de Pena de Corvo Negra com Raque Dourada */}
-        <div className="relative w-10 h-24 filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
-          <svg viewBox="0 0 40 100" className="w-full h-full">
-            {/* Raque central da pena (haste) */}
-            <path
-              d="M20,5 Q20.5,50 20,95"
-              stroke="#C9A86A"
-              strokeWidth="1.2"
-              fill="none"
-              strokeLinecap="round"
-            />
-            {/* Barba esquerda da pena (Preto Ônix com leve reflexo) */}
-            <path
-              d="M20,10 Q6,30 8,65 Q12,80 20,90 Q17,70 16,40 Z"
-              fill="url(#ravenGradientLeft)"
-            />
-            {/* Barba direita da pena */}
-            <path
-              d="M20,10 Q34,30 32,65 Q28,80 20,90 Q23,70 24,40 Z"
-              fill="url(#ravenGradientRight)"
-            />
-            {/* Ranhuras sutis da pena */}
-            <path d="M20,25 L12,32 M20,40 L10,48 M20,55 L13,62" stroke="#2B3B4E" strokeWidth="0.5" opacity="0.6" />
-            <path d="M20,25 L28,32 M20,40 L30,48 M20,55 L27,62" stroke="#2B3B4E" strokeWidth="0.5" opacity="0.6" />
+      {/* 2. A Pena de Corvo Negra em Queda com Balanço Senoidal Natural */}
+      <AnimatePresence>
+        <motion.div
+          key="falling-feather"
+          initial={{ y: -80, x: '50vw', rotate: -35, opacity: 0 }}
+          animate={
+            hasLanded
+              ? {
+                  y: '18vh',
+                  x: '50vw',
+                  rotate: [12, -8, 12],
+                  opacity: 0.95,
+                  scale: 1,
+                }
+              : {
+                  y: ['-5vh', '8vh', '14vh', '18vh'],
+                  x: ['48vw', '54vw', '46vw', '50vw'],
+                  rotate: [-35, 30, -20, 10],
+                  opacity: [0, 1, 1, 0.95],
+                  scale: [0.9, 1.1, 1, 1],
+                }
+          }
+          transition={
+            hasLanded
+              ? { rotate: { duration: 6, repeat: Infinity, ease: 'easeInOut' } }
+              : { duration: 4.8, ease: 'easeInOut', times: [0, 0.35, 0.7, 1] }
+          }
+          onAnimationComplete={() => {
+            if (!hasLanded) {
+              setHasLanded(true);
+              onFeatherLanded?.();
+            }
+          }}
+          className="absolute top-0 left-0 -translate-x-1/2 cursor-pointer pointer-events-auto group"
+        >
+          {/* SVG Hiperdetalhado da Pena de Corvo Negra com Brilho Dourado */}
+          <div className="relative w-12 h-32 filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.95)]">
+            <svg viewBox="0 0 50 120" className="w-full h-full">
+              {/* Raque central da pena em folha de ouro antigo */}
+              <path
+                d="M25,5 Q26,60 25,115"
+                stroke="#E5C384"
+                strokeWidth="1.8"
+                fill="none"
+                strokeLinecap="round"
+                style={{ filter: 'drop-shadow(0 0 3px rgba(229,195,132,0.8))' }}
+              />
 
-            <defs>
-              <linearGradient id="ravenGradientLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#181420" />
-                <stop offset="50%" stopColor="#0A080D" />
-                <stop offset="100%" stopColor="#040305" />
-              </linearGradient>
-              <linearGradient id="ravenGradientRight" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#221C2B" />
-                <stop offset="60%" stopColor="#0D0A12" />
-                <stop offset="100%" stopColor="#050406" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-      </motion.div>
+              {/* Barba esquerda da pena (Preto Ônix com reflexos esmeralda/azul de TVD) */}
+              <path
+                d="M25,10 Q6,35 8,80 Q14,100 25,110 Q20,85 19,45 Z"
+                fill="url(#ravenLeft)"
+              />
+              {/* Barba direita da pena */}
+              <path
+                d="M25,10 Q44,35 42,80 Q36,100 25,110 Q30,85 31,45 Z"
+                fill="url(#ravenRight)"
+              />
+
+              {/* Detalhes de nervuras das barbas */}
+              <g stroke="#C9A86A" strokeWidth="0.6" opacity="0.4">
+                <line x1="25" y1="25" x2="14" y2="35" />
+                <line x1="25" y1="40" x2="12" y2="52" />
+                <line x1="25" y1="58" x2="15" y2="70" />
+                <line x1="25" y1="76" x2="18" y2="88" />
+                
+                <line x1="25" y1="25" x2="36" y2="35" />
+                <line x1="25" y1="40" x2="38" y2="52" />
+                <line x1="25" y1="58" x2="35" y2="70" />
+                <line x1="25" y1="76" x2="32" y2="88" />
+              </g>
+
+              <defs>
+                <linearGradient id="ravenLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#1E1926" />
+                  <stop offset="45%" stopColor="#0B0910" />
+                  <stop offset="100%" stopColor="#030204" />
+                </linearGradient>
+                <linearGradient id="ravenRight" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#2D2438" />
+                  <stop offset="55%" stopColor="#120F17" />
+                  <stop offset="100%" stopColor="#050406" />
+                </linearGradient>
+              </defs>
+            </svg>
+
+            {/* Aura espectral suave ao redor da pena após o pouso */}
+            {hasLanded && (
+              <motion.div
+                animate={{ opacity: [0.3, 0.7, 0.3], scale: [0.95, 1.05, 0.95] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute inset-0 rounded-full blur-sm bg-gradient-to-b from-[#C9A86A]/20 via-transparent to-[#7A0C1E]/20 pointer-events-none"
+              />
+            )}
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
