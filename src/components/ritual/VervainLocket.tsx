@@ -80,11 +80,10 @@ export function VervainLocket({
         <motion.div
           animate={{
             rotateY: isOpen ? -135 : 0,
-            transformOrigin: 'left center',
           }}
           transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
           className="absolute w-52 h-52 rounded-full border-4 border-stone-400 bg-gradient-to-br from-[#E2DDD6] via-[#9B958C] to-[#4A453F] shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex items-center justify-center z-20 backface-hidden"
-          style={{ transformStyle: 'preserve-3d' }}
+          style={{ transformStyle: 'preserve-3d', transformOrigin: 'left center' }}
         >
           {/* Borda externa com beaded rim esculpido (microesferas prateadas) */}
           <div className="absolute inset-1 rounded-full border-2 border-dashed border-stone-300/70" />
