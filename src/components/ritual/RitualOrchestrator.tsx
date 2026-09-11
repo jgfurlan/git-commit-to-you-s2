@@ -2,12 +2,12 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CandleFlame } from './CandleFlame';
-import { VervainLocket } from './VervainLocket';
-import { GeminiAscendant } from './GeminiAscendant';
+import { CandleFlame3D } from './CandleFlame3D';
+import { VervainLocket3D } from './VervainLocket3D';
+import { GeminiAscendant3D } from './GeminiAscendant3D';
 import { SalvatoreParchment } from './SalvatoreParchment';
-import { DaylightWaxSeal } from './DaylightWaxSeal';
-import { FogCanvas } from '../effects/FogCanvas';
+import { DaylightWaxSeal3D } from './DaylightWaxSeal3D';
+import { Fog3DCanvas } from '../effects/Fog3DCanvas';
 import { RavenHarbinger } from '../effects/RavenHarbinger';
 import { VignetteOverlay } from '../effects/VignetteOverlay';
 import { RITUAL_TEXT } from '@/content/ritual-text';
@@ -60,8 +60,8 @@ export function RitualOrchestrator({
 
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center justify-between p-6 bg-[#040305] text-[#FAF6EE] overflow-hidden select-none">
-      {/* 1. Efeito de Névoa Volumétrica Animada (Visível no Desktop e Mobile) */}
-      <FogCanvas />
+      {/* 1. Efeito de Névoa Volumétrica 3D em Shaders WebGL GLSL */}
+      <Fog3DCanvas />
 
       {/* 2. Vinheta Sombria de Cripta */}
       <VignetteOverlay />
@@ -129,14 +129,13 @@ export function RitualOrchestrator({
                 <span>A Pena do Corvo em Vigília</span>
               </div>
 
-              <CandleFlame 
+              <CandleFlame3D 
                 isLit={isCandleLit} 
                 onIgnite={() => setIsCandleLit(true)}
-                size="lg" 
               />
 
-              <div className="mt-6 max-w-sm">
-                <p className="font-garamond italic text-base sm:text-lg text-[#FAF6EE] leading-relaxed mb-6 drop-shadow-md">
+              <div className="mt-4 max-w-sm">
+                <p className="font-garamond italic text-base sm:text-lg text-[#FAF6EE] leading-relaxed mb-4 drop-shadow-md">
                   &ldquo;{RITUAL_TEXT.act1.guardianIntro}&rdquo;
                 </p>
 
@@ -175,7 +174,7 @@ export function RitualOrchestrator({
               transition={{ duration: 0.7 }}
               className="flex flex-col items-center text-center"
             >
-              <div className="mb-2">
+              <div className="mb-1">
                 <span className="font-cinzel text-xs uppercase tracking-widest text-[#E5C384]">
                   {RITUAL_TEXT.act2.title}
                 </span>
@@ -184,7 +183,7 @@ export function RitualOrchestrator({
                 </p>
               </div>
 
-              <VervainLocket 
+              <VervainLocket3D 
                 partnerName={partnerName}
                 inscription={RITUAL_TEXT.act2.locketInscription}
                 onOpened={() => {}}
@@ -192,7 +191,7 @@ export function RitualOrchestrator({
 
               <button
                 onClick={() => setCurrentAct('ACT_3_GEMINI_ASCENDANT')}
-                className="mt-6 py-2 px-6 rounded-full border border-[#C9A86A]/60 bg-[#120F17]/90 hover:border-[#E5C384] text-[#FAF6EE] font-cinzel text-[11px] uppercase tracking-wider transition-all cursor-pointer shadow-md"
+                className="mt-4 py-2 px-6 rounded-full border border-[#C9A86A]/60 bg-[#120F17]/90 hover:border-[#E5C384] text-[#FAF6EE] font-cinzel text-[11px] uppercase tracking-wider transition-all cursor-pointer shadow-md"
               >
                 Consultar o Ascendente dos Gêmeos &rarr;
               </button>
@@ -209,7 +208,7 @@ export function RitualOrchestrator({
               transition={{ duration: 0.7 }}
               className="flex flex-col items-center text-center"
             >
-              <div className="mb-2">
+              <div className="mb-1">
                 <span className="font-cinzel text-xs uppercase tracking-widest text-[#E5C384]">
                   {RITUAL_TEXT.act3.title}
                 </span>
@@ -218,14 +217,14 @@ export function RitualOrchestrator({
                 </p>
               </div>
 
-              <GeminiAscendant 
+              <GeminiAscendant3D 
                 firstMetDate={firstMetDate}
                 proposalDate={proposalDate}
               />
 
               <button
                 onClick={() => setCurrentAct('ACT_4_SALVATORE_LETTER')}
-                className="mt-6 py-2 px-6 rounded-full border border-[#C9A86A]/60 bg-[#120F17]/90 hover:border-[#E5C384] text-[#FAF6EE] font-cinzel text-[11px] uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer shadow-md"
+                className="mt-4 py-2 px-6 rounded-full border border-[#C9A86A]/60 bg-[#120F17]/90 hover:border-[#E5C384] text-[#FAF6EE] font-cinzel text-[11px] uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer shadow-md"
               >
                 <BookOpen className="w-3.5 h-3.5 text-[#C9A86A]" />
                 <span>Abrir o Diário &rarr;</span>
@@ -262,7 +261,7 @@ export function RitualOrchestrator({
               transition={{ duration: 0.8 }}
               className="w-full flex flex-col items-center"
             >
-              <DaylightWaxSeal
+              <DaylightWaxSeal3D
                 onConsagrated={handlePactConsagrated}
                 partnerName={partnerName}
                 creatorName={creatorName}
